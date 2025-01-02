@@ -1,4 +1,4 @@
-import { useImmer } from "use-immer";
+import { useImmer, useImmerReducer } from "use-immer";
 import NoteList from "./NoteList";
 import NoteForm from "./NoteForm";
 import { useReducer } from "react";
@@ -13,23 +13,38 @@ const initialNotes = [
   { id: id++, text: "Belajar TypeScript", done: false },
 ];
 
+// const notesReducer = (notes, action) => {
+//   switch (action.type) {
+//     case "ADD_NOTE":
+//       return [...notes, action.payload];
+//     case "UPDATE_NOTE":
+//       return notes.map((note) =>
+//         note.id === action.payload.id ? action.payload : note
+//       );
+//     case "DELETE_NOTE":
+//       return notes.filter((note) => note.id !== action.payload.id);
+//     default:
+//       return notes;
+//   }
+// };
+
 const notesReducer = (notes, action) => {
-  switch (action.type) {
-    case "ADD_NOTE":
-      return [...notes, action.payload];
-    case "UPDATE_NOTE":
-      return notes.map((note) =>
-        note.id === action.payload.id ? action.payload : note
-      );
-    case "DELETE_NOTE":
-      return notes.filter((note) => note.id !== action.payload.id);
-    default:
-      return notes;
+  if (action.type === "ADD_NOTE") {
+    notes.push(action.payload);
+  } else if (action.type === "UPDATE_NOTE") {
+    const index = notes.findIndex((note) => note.id === action.payload.id);
+    notes[index] = action.payload;
+  } else if (action.type === "DELETE_NOTE") {
+    const index = notes.findIndex((note) => note.id === action.payload.id);
+    notes.splice(index, 1);
+  } else {
+    return notes;
   }
 };
 
 const NoteApp = () => {
-  const [notes, dispatch] = useReducer(notesReducer, initialNotes);
+  //   const [notes, dispatch] = useReducer(notesReducer, initialNotes);
+  const [notes, dispatch] = useImmerReducer(notesReducer, initialNotes);
 
   const handleAddNote = (text) => {
     dispatch({
