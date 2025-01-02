@@ -9,6 +9,8 @@ export default defineConfig({
       input: {
         main: "index.html",
         helloWorld: "hello-world.html",
+        contact: "contact.html",
+        task: "task.html",
       },
     },
   },

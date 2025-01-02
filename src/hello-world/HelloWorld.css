@@ -1,0 +1,12 @@
+.title {
+  color: red;
+  background-color: burlywood;
+  text-align: center;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.content {
+  color: blue;
+  background-color: yellow;
+}
