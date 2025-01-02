@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { NotesDispatchContext } from "./NoteContext";
 
-const NoteForm = ({ onAddNote }) => {
+const NoteForm = () => {
   const [text, setText] = useState("");
+  const dispatch = useContext(NotesDispatchContext);
 
   const handleChange = (event) => {
     setText(event.target.value);
@@ -9,8 +11,10 @@ const NoteForm = ({ onAddNote }) => {
 
   const handleClick = (event) => {
     event.preventDefault();
-    onAddNote(text);
-    setText("");
+    dispatch({
+      type: "ADD_NOTE",
+      payload: { text },
+    });
   };
   return (
     <div>

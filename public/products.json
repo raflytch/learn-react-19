@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Buku",
+    "price": 10000,
+    "stock": 10
+  },
+  {
+    "id": 2,
+    "name": "Pensil",
+    "price": 5000,
+    "stock": 5
+  },
+  {
+    "id": 3,
+    "name": "Penghapus",
+    "price": 5000,
+    "stock": 5
+  },
+  {
+    "id": 4,
+    "name": "Penggaris",
+    "price": 5000,
+    "stock": 5
+  },
+  {
+    "id": 5,
+    "name": "Penggaris",
+    "price": 5000,
+    "stock": 5
+  }
+]

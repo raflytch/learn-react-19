@@ -2,6 +2,7 @@ import { useImmer, useImmerReducer } from "use-immer";
 import NoteList from "./NoteList";
 import NoteForm from "./NoteForm";
 import { useReducer } from "react";
+import { NotesContext, NotesDispatchContext } from "./NoteContext";
 
 let id = 0;
 
@@ -12,21 +13,6 @@ const initialNotes = [
   { id: id++, text: "Belajar Javascript", done: false },
   { id: id++, text: "Belajar TypeScript", done: false },
 ];
-
-// const notesReducer = (notes, action) => {
-//   switch (action.type) {
-//     case "ADD_NOTE":
-//       return [...notes, action.payload];
-//     case "UPDATE_NOTE":
-//       return notes.map((note) =>
-//         note.id === action.payload.id ? action.payload : note
-//       );
-//     case "DELETE_NOTE":
-//       return notes.filter((note) => note.id !== action.payload.id);
-//     default:
-//       return notes;
-//   }
-// };
 
 const notesReducer = (notes, action) => {
   if (action.type === "ADD_NOTE") {
@@ -43,39 +29,17 @@ const notesReducer = (notes, action) => {
 };
 
 const NoteApp = () => {
-  //   const [notes, dispatch] = useReducer(notesReducer, initialNotes);
   const [notes, dispatch] = useImmerReducer(notesReducer, initialNotes);
-
-  const handleAddNote = (text) => {
-    dispatch({
-      type: "ADD_NOTE",
-      payload: { id: id++, text },
-    });
-  };
-
-  const handleChangeNote = (note) => {
-    dispatch({
-      type: "UPDATE_NOTE",
-      payload: note,
-    });
-  };
-
-  const handleDeleteNote = (note) => {
-    dispatch({
-      type: "DELETE_NOTE",
-      payload: note,
-    });
-  };
 
   return (
     <div>
-      <h1>Note App</h1>
-      <NoteForm onAddNote={handleAddNote} />
-      <NoteList
-        notes={notes}
-        onChange={handleChangeNote}
-        onDelete={handleDeleteNote}
-      />
+      <NotesContext.Provider value={notes}>
+        <NotesDispatchContext.Provider value={dispatch}>
+          <h1>Notes</h1>
+          <NoteForm />
+          <NoteList />
+        </NotesDispatchContext.Provider>
+      </NotesContext.Provider>
     </div>
   );
 };
